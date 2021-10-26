@@ -12,9 +12,8 @@ import type { ImageProps } from './types';
 
 import * as React from 'react';
 import createElement from '../createElement';
-import css from '../StyleSheet/css';
 import { getAssetByID } from '../../modules/AssetRegistry';
-import resolveShadowValue from '../StyleSheet/resolveShadowValue';
+import resolveShadowValue from '../StyleSheet/compiler/resolveShadowValue';
 import ImageLoader from '../../modules/ImageLoader';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
@@ -201,7 +200,7 @@ const Image: React.AbstractComponent<ImageProps, React.ElementRef<typeof View>> 
     const hiddenImage = displayImageUri
       ? createElement('img', {
           alt: accessibilityLabel || '',
-          classList: [classes.accessibilityImage],
+          style: styles.accessibilityImage$raw,
           draggable: draggable || false,
           ref: hiddenImageRef,
           src: displayImageUri
@@ -323,16 +322,6 @@ ImageWithStatics.queryCache = function (uris) {
   return ImageLoader.queryCache(uris);
 };
 
-const classes = css.create({
-  accessibilityImage: {
-    ...StyleSheet.absoluteFillObject,
-    height: '100%',
-    opacity: 0,
-    width: '100%',
-    zIndex: -1
-  }
-});
-
 const styles = StyleSheet.create({
   root: {
     flexBasis: 'auto',
@@ -351,6 +340,13 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     zIndex: -1
+  },
+  accessibilityImage$raw: {
+    ...StyleSheet.absoluteFillObject,
+    height: '100%',
+    opacity: 0,
+    width: '100%',
+    zIndex: -1
   }
 });
 
@@ -365,11 +361,11 @@ const resizeModeStyles = StyleSheet.create({
     backgroundSize: 'cover'
   },
   none: {
-    backgroundPosition: '0 0',
+    backgroundPosition: '0',
     backgroundSize: 'auto'
   },
   repeat: {
-    backgroundPosition: '0 0',
+    backgroundPosition: '0',
     backgroundRepeat: 'repeat',
     backgroundSize: 'auto'
   },
