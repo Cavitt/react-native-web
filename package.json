@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.17.5",
+  "version": "0.17.6",
   "name": "monorepo",
   "scripts": {
     "clean": "del-cli ./packages/*/dist",
@@ -75,11 +75,6 @@
     }
   },
   "lint-staged": {
-    "packages/react-native-web/src/index.js": [
-      "node ./scripts/babel/createModuleMap.js",
-      "prettier --write ./packages/babel-plugin-react-native-web/src/moduleMap.js",
-      "git add ./packages/babel-plugin-react-native-web/src/moduleMap.js"
-    ],
     "**/*.js": [
       "prettier --write",
       "git update-index --again",
